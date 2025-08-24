@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hardik Gondaliya — Register • Login • Portfolio</title>
+
+<style>
+/* ====== RESET ====== */
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  min-height: 100vh;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ====== BLOBS ====== */
+.blob {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  z-index: -1;
+  animation: float 12s infinite alternate;
+}
+.b1 { background: #ff4d4d; top:-50px; left:-80px; }
+.b2 { background: #00c9ff; bottom:-80px; right:-100px; animation-delay: 2s; }
+.b3 { background: #f9d423; top:40%; left:50%; animation-delay: 4s; }
+
+@keyframes float {
+  from { transform: translateY(0px) translateX(0px); }
+  to   { transform: translateY(-30px) translateX(20px); }
+}
+
+/* ====== WRAPPER ====== */
+.wrap { max-width: 900px; margin: 0 auto; padding: 2rem; }
+
+/* ====== SECTIONS ====== */
+.section { display: none; }
+.section.active { display: block; }
+.section.centered { display:flex; justify-content:center; align-items:center; min-height:100vh; }
+
+/* ====== CARD ====== */
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 600px;
+  animation: fadeIn 0.6s ease;
+}
+@keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;} }
+
+.title { font-size: 1.8rem; margin-bottom: .5rem; text-align:center; }
+.subtitle { text-align:center; margin-bottom: 1.5rem; opacity:0.85; }
+
+/* ====== INPUTS ====== */
+.field { margin-bottom: 1rem; flex:1; }
+.input, .select {
+  width: 100%; padding: .8rem 1rem; border-radius: 8px;
+  border: none; outline: none; font-size: 1rem;
+}
+.input:focus, .select:focus { box-shadow: 0 0 0 3px rgba(255,255,255,0.3); }
+
+.row { display:flex; gap:1rem; }
+
+/* ====== BUTTONS ====== */
+.btn, .cta {
+  display: inline-block;
+  padding: .8rem 1.2rem;
+  background: #00c9ff;
+  color: #fff; font-size:1rem; font-weight:600;
+  border:none; border-radius: 8px;
+  cursor: pointer; text-align:center;
+  transition: 0.3s;
+}
+.btn:hover, .cta:hover { background:#008db8; }
+.ghost { background: transparent; border:2px solid #fff; }
+
+/* ====== SUMMARY ====== */
+.summary { margin-top:1.5rem; display:none; }
+.summary h4 { margin-bottom:.8rem; }
+.grid { display:grid; grid-template-columns: 1fr 1fr; gap:.4rem .8rem; }
+.k { font-weight:bold; }
+.v { opacity:0.9; }
+.center-actions { margin-top:1rem; display:flex; gap:.8rem; justify-content:center; }
+
+/* ====== PORTFOLIO ====== */
+.portfolio { padding:2rem; }
+.portfolio h1 { font-size:2rem; margin-bottom:.5rem; }
+.portfolio p { margin-bottom:1.5rem; opacity:0.9; }
+.port-card {
+  background: rgba(255,255,255,0.1);
+  border-radius:12px;
+  padding:1.2rem;
+  margin-bottom:1rem;
+}
+footer {
+  margin-top:2rem;
+  text-align:center;
+  font-size:0.9rem;
+  opacity:0.7;
+}
+</style>
+</head>
+<body>
+
+<!-- Decorative blobs -->
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="blob b3"></div>
+
+<div class="wrap">
+
+  <!-- ================== REGISTRATION ================== -->
+  <section id="regSec" class="section centered active">
+    <div class="card" aria-labelledby="regTitle">
+      <h2 class="title" id="regTitle">📝 Registration</h2>
+      <p class="subtitle">Fill your details, submit, then login.</p>
+
+      <div class="field"><input class="input" id="fullName" placeholder="Full Name" /></div>
+      <div class="row">
+        <div class="field"><input class="input" id="email" type="email" placeholder="Email Address" /></div>
+        <div class="field"><input class="input" id="phone" placeholder="Phone Number" /></div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <select id="course" class="select">
+            <option value="">🎓 Select Course</option>
+            <option>B.Tech CSE</option>
+            <option>B.Tech IT</option>
+            <option>B.Tech AI & DS</option>
+            <option>B.Tech AI & ML</option>
+          </select>
+        </div>
+        <div class="field"><input class="input" id="newPass" type="password" placeholder="Create Password" /></div>
+      </div>
+
+      <button class="btn" id="regBtn">Submit Registration</button>
+
+      <div id="summaryBox" class="summary">
+        <h4>📋 Your submitted details</h4>
+        <div class="grid">
+          <div class="k">Full Name</div> <div class="v" id="sName">—</div>
+          <div class="k">Email</div>     <div class="v" id="sEmail">—</div>
+          <div class="k">Phone</div>     <div class="v" id="sPhone">—</div>
+          <div class="k">Course</div>    <div class="v" id="sCourse">—</div>
+        </div>
+        <div class="center-actions">
+          <button class="cta" id="goLogin">➡ Go to Login</button>
+          <button class="cta ghost" id="editAgain">✏ Edit details</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== LOGIN ================== -->
+  <section id="loginSec" class="section centered">
+    <div class="card" aria-labelledby="loginTitle">
+      <h2 class="title" id="loginTitle">🔐 Login</h2>
+      <p class="subtitle">Demo credentials → <b>hardik</b> / <b>1816</b></p>
+      <div class="field"><input class="input" id="loginUser" placeholder="Username" /></div>
+      <div class="field"><input class="input" id="loginPass" type="password" placeholder="Password" /></div>
+      <button class="btn" id="loginBtn">Login</button>
+    </div>
+  </section>
+
+  <!-- ================== PORTFOLIO ================== -->
+  <section id="portSec" class="section">
+    <div class="portfolio">
+      <h1>Hardik Gondaliya</h1>
+  <img src="hardik.jpg.jpg" alt="Hardik Gondaliya" width="150">
+
+      <h2>About Me</h2>
+  <p>Hello! I am Hardik Gondaliya. <br>I have completed my diploma in Government Polytechnic Gandhinagar and I am currently pursuing my B.Tech degree at JG University.</p>
+
+      <div class="port-card">
+        <h3>💻 Skills</h3>
+<ul>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+    <li>Python (basic)</li>
+    <li>Java (basic)</li>
+    <li>Networking</li>
+    <li>CCNA</li>
+    <li>Cyber Security</li>
+  </ul>
+
+      </div>
+
+      <div class="port-card">
+        <h3>📂 Projects</h3>
+          <ul>
+             <li>Packet Injection & Traffic Analysis (Cyber Security)</li>
+             <li>Moon & Earth Animation (HTML, CSS, JavaScript)</li>
+             <li>Calculator (HTML, CSS, JavaScript)</li>
+             <li>Language Learning Website</li>
+             <li>Basic Employee Management System</li>
+          </ul>
+      </div>
+
+      <div class="port-card">
+        <h3>📞 Contact</h3>
+        <p>Email: hg825333@gmail.com</p>
+        <p>Phone: +91 9099067173</p>
+      </div>
+
+      <footer>© <span id="year"></span> Hardik Gondaliya</footer>
+    </div>
+  </section>
+
+</div>
+
+<script>
+const $ = (sel)=>document.querySelector(sel);
+const show = (id)=>{
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active','centered'));
+  const el=$(id);
+  el.classList.add('active');
+  if(id==='#loginSec'||id==='#regSec') el.classList.add('centered');
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+/* REGISTRATION */
+const summaryBox = $('#summaryBox');
+const sName=$('#sName'), sEmail=$('#sEmail'), sPhone=$('#sPhone'), sCourse=$('#sCourse');
+
+$('#regBtn').addEventListener('click', ()=>{
+  const name=$('#fullName').value.trim();
+  const email=$('#email').value.trim();
+  const phone=$('#phone').value.trim();
+  const course=$('#course').value.trim();
+  const pass=$('#newPass').value;
+  if(!name||!email||!phone||!course||!pass){ alert('Please fill all fields.'); return; }
+  sName.textContent=name; sEmail.textContent=email; sPhone.textContent=phone; sCourse.textContent=course;
+  summaryBox.style.display='block';
+});
+
+$('#goLogin').addEventListener('click', ()=> show('#loginSec'));
+$('#editAgain').addEventListener('click', ()=> summaryBox.style.display='none');
+
+/* LOGIN */
+$('#loginBtn').addEventListener('click', ()=>{
+  const u=$('#loginUser').value.trim();
+  const p=$('#loginPass').value;
+  if(u==='hardik' && p==='1816'){ show('#portSec'); }
+  else alert('❌ Invalid credentials. Try: hardik / 1816');
+});
+
+/* YEAR */
+$('#year').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
